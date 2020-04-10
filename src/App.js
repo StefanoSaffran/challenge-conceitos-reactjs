@@ -17,11 +17,15 @@ function App() {
   }, []);
 
   async function handleAddRepository() {
-    const { data } = await api.post('repositories', {
-      title: `New repository ${Date.now()}`,
-	url: `https://github.com/StefanoSaffran/new-repository-${Date.now}`,
-	techs: ["ReactJS"]
-    })
+    try {
+      const { data } = await api.post('repositories', {
+        title: `New repository ${Date.now()}`,
+	      url: `https://github.com/StefanoSaffran/new-repository-${Date.now}`,
+	      techs: ["ReactJS"]
+      })
+    } catch(err) {
+      alert(err?.response?.data?.error);
+    }
 
     setRepositories([...repositories, data])
   }
@@ -33,7 +37,7 @@ function App() {
       setRepositories(repositories.filter(repository => repository.id !== id));
 
     } catch (err) {
-      alert(err.response.data);
+      alert(err?.response?.data?.error);
     }
   }
 
