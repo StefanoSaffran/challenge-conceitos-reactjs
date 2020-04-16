@@ -21,13 +21,15 @@ function App() {
       const { data } = await api.post('repositories', {
         title: `New repository ${Date.now()}`,
 	      url: `https://github.com/StefanoSaffran/new-repository-${Date.now}`,
-	      techs: ["ReactJS"]
+        techs: ["ReactJS"]
       })
+        
+      setRepositories([...repositories, data])
     } catch(err) {
       alert(err?.response?.data?.error);
     }
 
-    setRepositories([...repositories, data])
+    
   }
 
   async function handleRemoveRepository(id) {
